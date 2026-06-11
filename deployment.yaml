@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tapp-app
+  labels:
+    app: tapp-app
+spec:
+  replicas: 1 # 일단 1대로 띄웁니다
+  selector:
+    matchLabels:
+      app: tapp-app
+  template:
+    metadata:
+      labels:
+        app: tapp-app
+    spec:
+      containers:
+      - name: tapp-app
+        # 사용자님의 ECR 이미지 주소
+        image: 003493200358.dkr.ecr.ap-northeast-2.amazonaws.com/tapp-app:latest
+        ports:
+        - containerPort: 8080
+        env:
+        # 스프링부트 application.yml을 덮어씌우는 환경변수 설정
+        - name: SPRING_DATASOURCE_URL
+          value: "jdbc:mysql://tapp-db.cxm8mq4iwizp.ap-northeast-2.rds.amazonaws.com:3306/tappdb"
+        - name: SPRING_DATASOURCE_USERNAME
+          value: "admin"
+        - name: SPRING_DATASOURCE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: tapp-db-secret
+              key: DB_PASSWORD

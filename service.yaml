@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: tapp-service
+spec:
+  selector:
+    app: tapp-app
+  ports:
+    - protocol: TCP
+      port: 80 # 로드밸런서가 이 서비스의 80으로 보내면
+      targetPort: 8080 # 실제 스프링부트 컨테이너의 8080으로 꽂힙니다.
+  type: NodePort
