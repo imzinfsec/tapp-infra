@@ -46,7 +46,7 @@ Thumbs.db
 *.tfvars
 *.tfstate
 *.tfstate.backup
-.terraform/  
+.terraform/
 .terraform.lock.hcl
 *.pem
 /.metadata/
